@@ -5,7 +5,12 @@ VisualStudioVersion = 17.9.34728.123
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookManagementAPI", "BookManagementAPI\BookManagementAPI.csproj", "{3B78D470-53B7-48C6-B84B-3E4454C7029A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookManagementAPI.Test", "BookManagementAPI.Test\BookManagementAPI.Test.csproj", "{5393DEF2-BF96-436E-ACD1-1411DC4A0B33}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookManagementAPI.Test", "BookManagementAPI.Test\BookManagementAPI.Test.csproj", "{5393DEF2-BF96-436E-ACD1-1411DC4A0B33}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{C4368386-24EA-41AE-93EF-06EB5167A553}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
