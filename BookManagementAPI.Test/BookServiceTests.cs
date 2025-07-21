@@ -3,24 +3,20 @@ using BookManagementAPI.DTOs;
 using BookManagementAPI.Models;
 using Microsoft.Extensions.Logging;
 using Moq;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Xunit;
 
 /// <summary>
 /// Unit tests for the BookService class to verify service logic independently using mock data and dependencies.
 /// </summary>
 public class BookServiceTests
 {
-    private readonly Mock<IBookRepository> _mockRepo;
-    private readonly IMapper _mapper;
-    private readonly BookService _service;
-    private readonly Mock<ILogger<BookService>> _mockLogger = new Mock<ILogger<BookService>>();
+    private readonly Mock<IBookRepository> mockRepo;
+    private readonly IMapper mapper;
+    private readonly BookService service;
+    private readonly Mock<ILogger<BookService>> mockLogger = new Mock<ILogger<BookService>>();
 
     public BookServiceTests()
     {
-        _mockRepo = new Mock<IBookRepository>();
+        this.mockRepo = new Mock<IBookRepository>();
 
         var config = new MapperConfiguration(cfg =>
         {
@@ -28,9 +24,9 @@ public class BookServiceTests
             cfg.CreateMap<BookCreateDto, Book>();
             cfg.CreateMap<BookCreateDto, Book>().ReverseMap();
         });
-        _mapper = config.CreateMapper();
+        this.mapper = config.CreateMapper();
 
-        _service = new BookService(_mockRepo.Object, _mapper, _mockLogger.Object);
+        this.service = new BookService(this.mockRepo.Object, this.mapper, this.mockLogger.Object);
     }
 
     /// <summary>
@@ -38,17 +34,18 @@ public class BookServiceTests
     /// Test to check if the service can fetch all books and return them properly.
     /// </summary>
     [Fact]
+#pragma warning disable SA1615 // Element return value should be documented
     public async Task GetAllBooks_ReturnsMappedBooks()
+#pragma warning restore SA1615 // Element return value should be documented
     {
-       
         var books = new List<Book>
         {
             new Book { Id = 1, Title = "Test Book", Author = "Author A" },
-            new Book { Id = 2, Title = "Another Book", Author = "Author B" }
+            new Book { Id = 2, Title = "Another Book", Author = "Author B" },
         };
-        _mockRepo.Setup(r => r.GetAllAsync()).ReturnsAsync(books);
+        this.mockRepo.Setup(r => r.GetAllAsync()).ReturnsAsync(books);
 
-        var result = await _service.GetAllBooks();
+        var result = await this.service.GetAllBooks();
 
         Assert.Equal(2, result.Count());
         Assert.Contains(result, b => b.Title == "Test Book");
@@ -63,12 +60,14 @@ public class BookServiceTests
     /// </param>
     /// </summary>
     [Fact]
+#pragma warning disable SA1615 // Element return value should be documented
     public async Task GetBookById_BookExists_ReturnsMappedBook()
+#pragma warning restore SA1615 // Element return value should be documented
     {
         var book = new Book { Id = 1, Title = "Test Book", Author = "Author A" };
-        _mockRepo.Setup(r => r.GetByIdAsync(1)).ReturnsAsync(book);
+        this.mockRepo.Setup(r => r.GetByIdAsync(1)).ReturnsAsync(book);
 
-        var result = await _service.GetBookById(1);
+        var result = await this.service.GetBookById(1);
 
         Assert.NotNull(result);
         Assert.Equal("Test Book", result.Title);
@@ -83,11 +82,15 @@ public class BookServiceTests
     /// </param>
     /// </summary>
     [Fact]
+#pragma warning disable SA1615 // Element return value should be documented
     public async Task GetBookById_BookDoesNotExist_ReturnsNull()
+#pragma warning restore SA1615 // Element return value should be documented
     {
-        _mockRepo.Setup(r => r.GetByIdAsync(It.IsAny<int>())).ReturnsAsync((Book)null);
+#pragma warning disable CS8620 // Argument cannot be used for parameter due to differences in the nullability of reference types.
+        this.mockRepo.Setup(r => r.GetByIdAsync(It.IsAny<int>())).ReturnsAsync((Book)null);
+#pragma warning restore CS8620 // Argument cannot be used for parameter due to differences in the nullability of reference types.
 
-        var result = await _service.GetBookById(999);
+        var result = await this.service.GetBookById(999);
 
         Assert.Null(result);
     }
@@ -102,9 +105,9 @@ public class BookServiceTests
         var dto = new BookCreateDto { Title = "New Book", Author = "Author A" };
         var created = new Book { Id = 1, Title = "New Book", Author = "Author A" };
 
-        _mockRepo.Setup(r => r.CreateAsync(It.IsAny<Book>())).ReturnsAsync(created);
+        this.mockRepo.Setup(r => r.CreateAsync(It.IsAny<Book>())).ReturnsAsync(created);
 
-        var result = await _service.CreateBook(dto);
+        var result = await this.service.CreateBook(dto);
 
         Assert.NotNull(result);
         Assert.Equal("New Book", result.Title);
@@ -119,12 +122,12 @@ public class BookServiceTests
     public async Task UpdateBook_BookExists_ReturnsTrue()
     {
         var existingBook = new Book { Id = 1, Title = "Old Title", Author = "Author" };
-        _mockRepo.Setup(r => r.GetByIdAsync(1)).ReturnsAsync(existingBook);
-        _mockRepo.Setup(r => r.UpdateAsync(existingBook)).Returns(Task.CompletedTask);
+        this.mockRepo.Setup(r => r.GetByIdAsync(1)).ReturnsAsync(existingBook);
+        this.mockRepo.Setup(r => r.UpdateAsync(existingBook)).Returns(Task.CompletedTask);
 
         var dto = new BookCreateDto { Title = "Updated Title", Author = "Author" };
 
-        var result = await _service.UpdateBook(1, dto);
+        var result = await this.service.UpdateBook(1, dto);
 
         Assert.True(result);
         Assert.Equal("Updated Title", existingBook.Title);
@@ -136,11 +139,11 @@ public class BookServiceTests
     [Fact]
     public async Task UpdateBook_BookDoesNotExist_ReturnsFalse()
     {
-        _mockRepo.Setup(r => r.GetByIdAsync(1)).ReturnsAsync((Book)null);
+        mockRepo.Setup(r => r.GetByIdAsync(1)).ReturnsAsync((Book)null);
 
         var dto = new BookCreateDto { Title = "Updated Title", Author = "Author" };
 
-        var result = await _service.UpdateBook(1, dto);
+        var result = await service.UpdateBook(1, dto);
 
         Assert.False(result);
     }
@@ -153,10 +156,10 @@ public class BookServiceTests
     public async Task DeleteBook_BookExists_ReturnsTrue()
     {
         var book = new Book { Id = 1, Title = "Delete Me", Author = "Author" };
-        _mockRepo.Setup(r => r.GetByIdAsync(1)).ReturnsAsync(book);
-        _mockRepo.Setup(r => r.DeleteAsync(book)).Returns(Task.CompletedTask);
+        this.mockRepo.Setup(r => r.GetByIdAsync(1)).ReturnsAsync(book);
+        this.mockRepo.Setup(r => r.DeleteAsync(book)).Returns(Task.CompletedTask);
 
-        var result = await _service.DeleteBook(1);
+        var result = await this.service.DeleteBook(1);
 
         Assert.True(result);
     }
@@ -167,9 +170,9 @@ public class BookServiceTests
     [Fact]
     public async Task DeleteBook_BookDoesNotExist_ReturnsFalse()
     {
-        _mockRepo.Setup(r => r.GetByIdAsync(1)).ReturnsAsync((Book)null);
+        this.mockRepo.Setup(r => r.GetByIdAsync(1)).ReturnsAsync((Book)null);
 
-        var result = await _service.DeleteBook(1);
+        var result = await this.service.DeleteBook(1);
 
         Assert.False(result);
     }

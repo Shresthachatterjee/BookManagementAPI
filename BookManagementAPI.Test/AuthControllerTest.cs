@@ -1,27 +1,27 @@
-﻿using Xunit;
-using Moq;
-using Microsoft.AspNetCore.Mvc;
-using BookManagementAPI.Helpers;
-using BookManagementAPI.Controllers;
-using BookManagementAPI.Models;
-
-namespace BookManagementAPI.Tests
+﻿namespace BookManagementAPI.Tests
 {
+    using BookManagementAPI.Controllers;
+    using BookManagementAPI.Helpers;
+    using Microsoft.AspNetCore.Mvc;
+    using Moq;
+    using Xunit;
+
     /// <summary>
     /// Unit tests for the AuthController to validate authentication behavior.
     /// </summary>
     public class AuthControllerTests
     {
-        private readonly Mock<IJwtTokenGenerator> _mockTokenGenerator;
-        private readonly AuthController _controller;
+        private readonly Mock<IJwtTokenGenerator> mockTokenGenerator;
+        private readonly AuthController controller;
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="AuthControllerTests"/> class.
         /// Constructor initializes mock dependencies and controller instance for testing.
         /// </summary>
         public AuthControllerTests()
         {
-            _mockTokenGenerator = new Mock<IJwtTokenGenerator>();
-            _controller = new AuthController(_mockTokenGenerator.Object);
+            this.mockTokenGenerator = new Mock<IJwtTokenGenerator>();
+            this.controller = new AuthController(this.mockTokenGenerator.Object);
         }
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace BookManagementAPI.Tests
             var request = new LoginRequest
             {
                 Username = "admin",
-                Password = "password"
+                Password = "password",
             };
 
             // Act
@@ -66,7 +66,7 @@ namespace BookManagementAPI.Tests
             var request = new LoginRequest
             {
                 Username = "user",
-                Password = "wrongpassword"
+                Password = "wrongpassword",
             };
 
             // Act

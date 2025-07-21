@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using BookManagementAPI.DTOs;
 using BookManagementAPI.Models;
-using Microsoft.Extensions.Logging;
 
 /// <summary>
 /// Provides business logic for managing books, including operations such as
@@ -9,19 +8,20 @@ using Microsoft.Extensions.Logging;
 /// </summary>
 public class BookService : IBookService
 {
-    private readonly IBookRepository _repository;
+    private readonly IBookRepository repository;
     private readonly IMapper _mapper;
-    private readonly ILogger<BookService> _logger;
+    private readonly ILogger<BookService> logger;
 
     /// <summary>
+    /// Initializes a new instance of the <see cref="BookService"/> class.
     /// Initializes a new instance of the BookService with injected repository,
     /// AutoMapper, and logging components.
     /// </summary>
     public BookService(IBookRepository repository, IMapper mapper, ILogger<BookService> logger)
     {
-        _repository = repository;
+        this.repository = repository;
         _mapper = mapper;
-        _logger = logger;
+        this.logger = logger;
     }
 
     /// <summary>
@@ -31,8 +31,8 @@ public class BookService : IBookService
     /// <returns>A list of all books with basic information for display or API response.</returns>
     public async Task<IEnumerable<BookReadDto>> GetAllBooks()
     {
-        _logger.LogInformation("Fetching all books.");
-        var books = await _repository.GetAllAsync();
+        logger.LogInformation("Fetching all books.");
+        var books = await repository.GetAllAsync();
         return _mapper.Map<IEnumerable<BookReadDto>>(books);
     }
 
@@ -44,11 +44,11 @@ public class BookService : IBookService
     /// <returns>Detailed information of the selected book, or null if not found.</returns>
     public async Task<BookReadDto> GetBookById(int id)
     {
-        _logger.LogInformation("Fetching book with ID {BookId}.", id);
-        var book = await _repository.GetByIdAsync(id);
+        logger.LogInformation("Fetching book with ID {BookId}.", id);
+        var book = await repository.GetByIdAsync(id);
         if (book == null)
         {
-            _logger.LogWarning("Book with ID {BookId} not found.", id);
+            logger.LogWarning("Book with ID {BookId} not found.", id);
             return null;
         }
 
@@ -63,10 +63,10 @@ public class BookService : IBookService
     /// <returns>The newly created book with its system-generated details.</returns>
     public async Task<BookReadDto> CreateBook(BookCreateDto dto)
     {
-        _logger.LogInformation("Creating a new book.");
+        logger.LogInformation("Creating a new book.");
         var book = _mapper.Map<Book>(dto);
-        var created = await _repository.CreateAsync(book);
-        _logger.LogInformation("Book with ID {BookId} created successfully.", created.Id);
+        var created = await repository.CreateAsync(book);
+        logger.LogInformation("Book with ID {BookId} created successfully.", created.Id);
         return _mapper.Map<BookReadDto>(created);
     }
 
@@ -79,17 +79,17 @@ public class BookService : IBookService
     /// <returns>True if the update is successful, otherwise false.</returns>
     public async Task<bool> UpdateBook(int id, BookCreateDto dto)
     {
-        _logger.LogInformation("Updating book with ID {BookId}.", id);
-        var book = await _repository.GetByIdAsync(id);
+        logger.LogInformation("Updating book with ID {BookId}.", id);
+        var book = await repository.GetByIdAsync(id);
         if (book == null)
         {
-            _logger.LogWarning("Cannot update. Book with ID {BookId} not found.", id);
+            logger.LogWarning("Cannot update. Book with ID {BookId} not found.", id);
             return false;
         }
 
         _mapper.Map(dto, book);
-        await _repository.UpdateAsync(book);
-        _logger.LogInformation("Book with ID {BookId} updated successfully.", id);
+        await repository.UpdateAsync(book);
+        logger.LogInformation("Book with ID {BookId} updated successfully.", id);
         return true;
     }
 
@@ -101,16 +101,16 @@ public class BookService : IBookService
     /// <returns>True if the book is successfully deleted, otherwise false.</returns>
     public async Task<bool> DeleteBook(int id)
     {
-        _logger.LogInformation("Deleting book with ID {BookId}.", id);
-        var book = await _repository.GetByIdAsync(id);
+        logger.LogInformation("Deleting book with ID {BookId}.", id);
+        var book = await repository.GetByIdAsync(id);
         if (book == null)
         {
-            _logger.LogWarning("Cannot delete. Book with ID {BookId} not found.", id);
+            logger.LogWarning("Cannot delete. Book with ID {BookId} not found.", id);
             return false;
         }
 
-        await _repository.DeleteAsync(book);
-        _logger.LogInformation("Book with ID {BookId} deleted successfully.", id);
+        await this.repository.DeleteAsync(book);
+        this.logger.LogInformation("Book with ID {BookId} deleted successfully.", id);
         return true;
     }
 }

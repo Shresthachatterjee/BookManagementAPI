@@ -1,9 +1,9 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
-using BookManagementAPI.Validators;
-
-namespace BookManagementAPI.DTOs
+﻿namespace BookManagementAPI.DTOs
 {
+    using BookManagementAPI.Validators;
+    using System;
+    using System.ComponentModel.DataAnnotations;
+
     public class BookCreateDto
     {
         [Required(ErrorMessage = "Title is required.")]
@@ -19,4 +19,3 @@ namespace BookManagementAPI.DTOs
         public int Year { get; set; }
     }
 }
-

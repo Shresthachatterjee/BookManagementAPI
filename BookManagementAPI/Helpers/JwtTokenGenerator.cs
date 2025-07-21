@@ -1,28 +1,29 @@
-﻿using Microsoft.Extensions.Configuration;
-using Microsoft.IdentityModel.Tokens;
-using System;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
-
-namespace BookManagementAPI.Helpers
+﻿namespace BookManagementAPI.Helpers
 {
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.IdentityModel.Tokens;
+    using System;
+    using System.IdentityModel.Tokens.Jwt;
+    using System.Security.Claims;
+    using System.Text;
+
     /// <summary>
     /// This class is responsible for generating JWT tokens.
     /// It retrieves JWT settings from configuration and creates signed tokens containing user claims.
     /// </summary>
     public class JwtTokenGenerator : IJwtTokenGenerator
     {
-        private readonly IConfiguration _config;
+        private readonly IConfiguration config;
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="JwtTokenGenerator"/> class.
         /// Constructor that receives application configuration through dependency injection.
         /// This configuration is used to read JWT settings like secret key, issuer, audience, and expiration time.
         /// </summary>
         /// <param name="config">Application configuration containing JWT settings.</param>
         public JwtTokenGenerator(IConfiguration config)
         {
-            _config = config;
+            this.config = config;
         }
 
         /// <summary>
@@ -34,7 +35,7 @@ namespace BookManagementAPI.Helpers
         public string GenerateToken(string username)
         {
             // Retrieve JWT settings from appsettings.json
-            var jwtSettings = _config.GetSection("JwtSettings");
+            var jwtSettings = config.GetSection("JwtSettings");
             var secretKey = jwtSettings["SecretKey"];
             var issuer = jwtSettings["Issuer"];
             var audience = jwtSettings["Audience"];
@@ -49,9 +50,9 @@ namespace BookManagementAPI.Helpers
             // Create an array of claims that represent the user identity
             var claims = new[]
             {
-                new Claim(JwtRegisteredClaimNames.Sub, username),                 
-                new Claim(ClaimTypes.Name, username),                             
-                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()) 
+                new Claim(JwtRegisteredClaimNames.Sub, username),
+                new Claim(ClaimTypes.Name, username),
+                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
             };
 
             // Create the JWT token with issuer, audience, claims, expiration, and signing credentials

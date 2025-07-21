@@ -1,4 +1,4 @@
-﻿using BookManagementAPI.Models; 
+﻿using BookManagementAPI.Models;
 
 /// <summary>
 /// Interface for defining CRUD operations related to the Book entity.

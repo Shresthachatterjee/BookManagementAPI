@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using BookManagementAPI.Helpers;
-
-namespace BookManagementAPI.Controllers
+﻿namespace BookManagementAPI.Controllers
 {
+    using BookManagementAPI.Helpers;
+    using Microsoft.AspNetCore.Mvc;
+
     /// <summary>
     /// Controller responsible for handling user authentication.
     /// </summary>
@@ -10,15 +10,16 @@ namespace BookManagementAPI.Controllers
     [Route("api/[controller]")]
     public class AuthController : ControllerBase
     {
-        private readonly IJwtTokenGenerator _tokenGenerator;
+        private readonly IJwtTokenGenerator tokenGenerator;
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="AuthController"/> class.
         /// Constructor that injects the JWT token generator dependency.
         /// </summary>
         /// <param name="tokenGenerator">An implementation of IJwtTokenGenerator used to generate JWT tokens.</param>
         public AuthController(IJwtTokenGenerator tokenGenerator)
         {
-            _tokenGenerator = tokenGenerator;
+            this.tokenGenerator = tokenGenerator;
         }
 
         /// <summary>
@@ -31,32 +32,18 @@ namespace BookManagementAPI.Controllers
         public IActionResult Login([FromBody] LoginRequest request)
         {
             if (request == null)
-                return BadRequest();
+            {
+                return this.BadRequest();
+            }
 
             // Simple hardcoded authentication logic for demonstration purposes
             if (request.Username == "admin" && request.Password == "password")
             {
-                var token = _tokenGenerator.GenerateToken(request.Username);
-                return Ok(new { token });
+                var token = this.tokenGenerator.GenerateToken(request.Username);
+                return this.Ok(new { token });
             }
 
-            return Unauthorized();
+            return this.Unauthorized();
         }
-    }
-
-    /// <summary>
-    /// Model representing the login request payload.
-    /// </summary>
-    public class LoginRequest
-    {
-        /// <summary>
-        /// The username of the user attempting to log in.
-        /// </summary>
-        public string Username { get; set; }
-
-        /// <summary>
-        /// The password of the user attempting to log in.
-        /// </summary>
-        public string Password { get; set; }
     }
 }

@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using BookManagementAPI.DTOs;
-using Xunit;
-
-namespace BookManagementAPI.Tests.DTOs
+﻿namespace BookManagementAPI.Tests.DTOs
 {
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+    using BookManagementAPI.DTOs;
+    using Xunit;
+
     /// <summary>
     /// Unit tests to validate the rules applied on BookCreateDto properties using data annotations.
     /// </summary>
@@ -28,18 +28,18 @@ namespace BookManagementAPI.Tests.DTOs
         /// Ensures that a valid BookCreateDto passes all validation rules.
         /// </summary>
         [Fact]
-        public void BookCreateDto_ValidData_ShouldPassValidation()
+        public void BookCreateDtoValidDataShouldPassValidation()
         {
             // Arrange
             var dto = new BookCreateDto
             {
                 Title = "Effective C#",
                 Author = "Bill Wagner",
-                Year = DateTime.Now.Year
+                Year = DateTime.Now.Year,
             };
 
             // Act
-            var results = ValidateDto(dto);
+            var results = this.ValidateDto(dto);
 
             // Assert
             Assert.Empty(results); // Expecting no validation errors
@@ -55,10 +55,10 @@ namespace BookManagementAPI.Tests.DTOs
             {
                 Title = null,
                 Author = "Author Name",
-                Year = 2000
+                Year = 2000,
             };
 
-            var results = ValidateDto(dto);
+            var results = this.ValidateDto(dto);
 
             Assert.Contains(results, r => r.ErrorMessage.Contains("Title is required"));
         }
@@ -73,10 +73,10 @@ namespace BookManagementAPI.Tests.DTOs
             {
                 Title = "A", // Too short
                 Author = "Author Name",
-                Year = 2000
+                Year = 2000,
             };
 
-            var results = ValidateDto(dto);
+            var results = this.ValidateDto(dto);
 
             Assert.Contains(results, r => r.ErrorMessage.Contains("Title must be between 2 and 100 characters"));
         }
@@ -91,10 +91,10 @@ namespace BookManagementAPI.Tests.DTOs
             {
                 Title = "Some Book",
                 Author = null,
-                Year = 2000
+                Year = 2000,
             };
 
-            var results = ValidateDto(dto);
+            var results = this.ValidateDto(dto);
 
             Assert.Contains(results, r => r.ErrorMessage.Contains("Author is required"));
         }
@@ -109,10 +109,10 @@ namespace BookManagementAPI.Tests.DTOs
             {
                 Title = "Old Book",
                 Author = "Old Author",
-                Year = 1000 // Too early
+                Year = 1000, // Too early
             };
 
-            var results = ValidateDto(dto);
+            var results = this.ValidateDto(dto);
 
             Assert.Contains(results, r => r.ErrorMessage.Contains("Year must be between 1450 and 2100"));
         }
@@ -127,10 +127,10 @@ namespace BookManagementAPI.Tests.DTOs
             {
                 Title = "Future Book",
                 Author = "Future Author",
-                Year = DateTime.Now.Year + 1 // Future year
+                Year = DateTime.Now.Year + 1, // Future year
             };
 
-            var results = ValidateDto(dto);
+            var results = this.ValidateDto(dto);
 
             Assert.Contains(results, r => r.ErrorMessage.Contains("Year must not be in the future"));
         }
