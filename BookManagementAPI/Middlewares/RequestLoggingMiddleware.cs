@@ -1,35 +1,4 @@
-﻿//using System.Diagnostics;
-
-//public class RequestLoggingMiddleware
-//{
-//    private readonly RequestDelegate next;
-//    private readonly ILogger<RequestLoggingMiddleware> logger;
-
-//    public RequestLoggingMiddleware(RequestDelegate next, ILogger<RequestLoggingMiddleware> logger)
-//    {
-//        this.next = next;
-//        this.logger = logger;
-//    }
-
-//    public async Task InvokeAsync(HttpContext context)
-//    {
-//        var stopwatch = Stopwatch.StartNew();
-
-//        // Proceed with request
-//        await this.next(context);
-
-//        stopwatch.Stop();
-//        var elapsedMs = stopwatch.ElapsedMilliseconds;
-
-//        this.logger.LogInformation(
-//            "Request: {method} {url} responded {statusCode} in {time} ms",
-//            context.Request.Method,
-//            context.Request.Path,
-//            context.Response.StatusCode,
-//            elapsedMs);
-//    }
-//}
-using System.Diagnostics;
+﻿using System.Diagnostics;
 
 /// <summary>
 /// Middleware to log incoming HTTP requests with method, path, status code, and response time.
