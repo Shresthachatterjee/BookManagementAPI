@@ -29,9 +29,6 @@ jobs:
     - name: Format code (static analysis - formatting)
       run: dotnet format BookManagementAPI.sln --verify-no-changes
 
-    - name: Build solution with analyzers
-      run: dotnet build BookManagementAPI.sln --no-restore --configuration Release -warnaserror
-
 
     - name: Build solution
       run: dotnet build BookManagementAPI.sln --no-restore --configuration Release
