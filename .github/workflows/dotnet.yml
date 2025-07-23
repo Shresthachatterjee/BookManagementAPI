@@ -20,10 +20,10 @@ jobs:
         dotnet-version: 8.0.x
 
     - name: Restore dependencies
-      run: dotnet restore BookManagementAPI.sln
+      run: dotnet restore BookManagementAPI/BookManagementAPI.sln
 
     - name: Build
-      run: dotnet build BookManagementAPI.sln --no-restore
+      run: dotnet build BookManagementAPI/BookManagementAPI.sln --no-restore
 
     - name: Test
-      run: dotnet test BookManagementAPI.sln --no-build --verbosity normal
+      run: dotnet test BookManagementAPI/BookManagementAPI.sln --no-build --verbosity normal
