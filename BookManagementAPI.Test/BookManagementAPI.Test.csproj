@@ -9,6 +9,10 @@
     <IsTestProject>true</IsTestProject>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
+  
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
+  </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="coverlet.collector" Version="6.0.4">

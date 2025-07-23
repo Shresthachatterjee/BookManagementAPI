@@ -17,6 +17,12 @@
       },
       "orderingRules": {
         "usingDirectivesPlacement": "outsideNamespace"
+      },
+      "layoutRules": {
+        "requireBlankLinesBetweenMembers": false
+      },
+      "rules": {
+        "SA0001": false
       }
     }
   }
