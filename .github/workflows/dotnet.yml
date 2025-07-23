@@ -1,10 +1,10 @@
-name: .NET
+name: .NET Build and Test
 
 on:
   push:
-    branches: [ "main", "feature/**" ]
+    branches: [ "feature/main" ]
   pull_request:
-    branches: [ "main", "feature/**" ]
+    branches: [ "feature/main" ]
 
 jobs:
   build:
@@ -12,18 +12,19 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
+    - name: Checkout code
+      uses: actions/checkout@v4
 
-    - name: Setup .NET
+    - name: Setup .NET SDK
       uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: 8.0.x
+        dotnet-version: '7.0.x'  # Or whichever version you use
 
     - name: Restore dependencies
-      run: dotnet restore BookManagementAPI/BookManagementAPI.sln
+      run: dotnet restore BookManagementAPI.sln
 
     - name: Build
-      run: dotnet build BookManagementAPI/BookManagementAPI.sln --no-restore
+      run: dotnet build BookManagementAPI.sln --no-restore --configuration Release
 
-    - name: Test
-      run: dotnet test BookManagementAPI/BookManagementAPI.sln --no-build --verbosity normal
+    - name: Run Tests
+      run: dotnet test BookManagementAPI.sln --no-build --verbosity normal
