@@ -1,4 +1,8 @@
-﻿using BookManagementAPI.Models;
+﻿// <copyright file="IBookRepository.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
+using BookManagementAPI.Models;
 
 /// <summary>
 /// Interface for defining CRUD operations related to the Book entity.
@@ -30,12 +34,13 @@ public interface IBookRepository
     /// Updates an existing book in the database asynchronously.
     /// </summary>
     /// <param name="book">The Book object with updated information.</param>
+    /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
     Task UpdateAsync(Book book);
 
     /// <summary>
     /// Deletes an existing book from the database asynchronously.
     /// </summary>
     /// <param name="book">The Book object to delete.</param>
+    /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
     Task DeleteAsync(Book book);
 }
-

@@ -1,4 +1,9 @@
-﻿namespace BookManagementAPI.Tests.DTOs
+﻿// <copyright file="ValidationTest.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+#pragma warning disable
+
+namespace BookManagementAPI.Tests.DTOs
 {
     using System;
     using System.Collections.Generic;
@@ -9,7 +14,9 @@
     /// <summary>
     /// Unit tests to validate the rules applied on BookCreateDto properties using data annotations.
     /// </summary>
+#pragma warning disable SA1649 // File name should match first type name
     public class BookCreateDtoValidationTests
+#pragma warning restore SA1649 // File name should match first type name
     {
         /// <summary>
         /// Helper method to validate a DTO instance using DataAnnotations.
@@ -28,7 +35,9 @@
         /// Ensures that a valid BookCreateDto passes all validation rules.
         /// </summary>
         [Fact]
+#pragma warning disable SA1202 // Elements should be ordered by access
         public void BookCreateDtoValidDataShouldPassValidation()
+#pragma warning restore SA1202 // Elements should be ordered by access
         {
             // Arrange
             var dto = new BookCreateDto

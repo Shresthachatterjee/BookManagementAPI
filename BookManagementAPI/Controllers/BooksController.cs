@@ -1,4 +1,11 @@
-﻿using BookManagementAPI.DTOs;
+﻿// <copyright file="BooksController.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
+#pragma warning disable SA1600
+#pragma warning disable SA1614
+
+using BookManagementAPI.DTOs;
 using Microsoft.AspNetCore.Mvc;
 
 [ApiController]
@@ -43,6 +50,7 @@ public class BooksController : ControllerBase
     /// <summary>Creates a new book record entry in the database using the provided book details.</summary>
     /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
     [HttpPost]
+#pragma warning disable SA1611
     public async Task<ActionResult<BookReadDto>> Create(BookCreateDto dto)
     {
         var book = await this.service.CreateBook(dto);

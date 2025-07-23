@@ -1,4 +1,8 @@
-﻿namespace BookManagementAPI.Controllers
+﻿// <copyright file="AuthController.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
+namespace BookManagementAPI.Controllers
 {
     using BookManagementAPI.Helpers;
     using Microsoft.AspNetCore.Mvc;

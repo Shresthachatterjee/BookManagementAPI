@@ -1,4 +1,8 @@
-﻿using AutoMapper;
+﻿// <copyright file="BookProfile.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
+using AutoMapper;
 using BookManagementAPI.DTOs;
 using BookManagementAPI.Models;
 

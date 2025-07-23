@@ -1,34 +1,24 @@
-﻿//using System.Diagnostics;
-
-//public class RequestLoggingMiddleware
-//{
-//    private readonly RequestDelegate next;
-//    private readonly ILogger<RequestLoggingMiddleware> logger;
-
-//    public RequestLoggingMiddleware(RequestDelegate next, ILogger<RequestLoggingMiddleware> logger)
-//    {
-//        this.next = next;
-//        this.logger = logger;
-//    }
-
-//    public async Task InvokeAsync(HttpContext context)
+﻿// <copyright file="RequestLoggingMiddleware.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+// public async Task InvokeAsync(HttpContext context)
 //    {
 //        var stopwatch = Stopwatch.StartNew();
 
-//        // Proceed with request
+// // Proceed with request
 //        await this.next(context);
 
-//        stopwatch.Stop();
+// stopwatch.Stop();
 //        var elapsedMs = stopwatch.ElapsedMilliseconds;
 
-//        this.logger.LogInformation(
+// this.logger.LogInformation(
 //            "Request: {method} {url} responded {statusCode} in {time} ms",
 //            context.Request.Method,
 //            context.Request.Path,
 //            context.Response.StatusCode,
 //            elapsedMs);
 //    }
-//}
+// }
 using System.Diagnostics;
 
 /// <summary>
@@ -59,7 +49,7 @@ public class RequestLoggingMiddleware
     public async Task InvokeAsync(HttpContext context)
     {
         // Log before request is processed
-        logger.LogWarning("➡️ Middleware START: {method} {url}", context.Request.Method, context.Request.Path);
+        this.logger.LogWarning("➡️ Middleware START: {method} {url}", context.Request.Method, context.Request.Path);
 
         var stopwatch = Stopwatch.StartNew();
 
@@ -70,14 +60,15 @@ public class RequestLoggingMiddleware
         var elapsedMs = stopwatch.ElapsedMilliseconds;
 
         // Log after request is processed
-        logger.LogWarning("✅ Middleware END: {method} {url} responded {statusCode} in {time} ms",
+        this.logger.LogWarning(
+            "✅ Middleware END: {method} {url} responded {statusCode} in {time} ms",
             context.Request.Method,
             context.Request.Path,
             context.Response.StatusCode,
             elapsedMs);
 
         // Log as information for long-term monitoring
-        logger.LogInformation(
+        this.logger.LogInformation(
             "Request: {method} {url} responded {statusCode} in {time} ms",
             context.Request.Method,
             context.Request.Path,

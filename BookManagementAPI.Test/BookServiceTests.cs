@@ -1,4 +1,14 @@
-﻿using AutoMapper;
+﻿// <copyright file="BookServiceTests.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
+#pragma warning disable SA1600
+#pragma warning disable
+// <copyright file="BookServiceTests.cs" company="PlaceholderCompany">
+
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+using AutoMapper;
 using BookManagementAPI.DTOs;
 using BookManagementAPI.Models;
 using Microsoft.Extensions.Logging;
@@ -99,6 +109,7 @@ public class BookServiceTests
     /// Confirms that CreateBook() successfully maps and creates a new book, returning the created book DTO.
     /// Test to ensure that a new book can be added successfully.
     /// </summary>
+    /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
     [Fact]
     public async Task CreateBook_ValidDto_ReturnsCreatedBook()
     {
@@ -118,6 +129,7 @@ public class BookServiceTests
     /// Also ensures that the book’s title is changed as per the input.
     /// Test to verify that updating an existing book works and updates the title.
     /// </summary>
+    /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
     [Fact]
     public async Task UpdateBook_BookExists_ReturnsTrue()
     {
@@ -136,14 +148,19 @@ public class BookServiceTests
     /// <summary>
     /// Ensures UpdateBook() returns false when the book with the specified ID does not exist in the database.
     /// </summary>
+    /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
     [Fact]
     public async Task UpdateBook_BookDoesNotExist_ReturnsFalse()
     {
-        mockRepo.Setup(r => r.GetByIdAsync(1)).ReturnsAsync((Book)null);
+#pragma warning disable CS8620
+#pragma warning disable CS8600
+        this.mockRepo.Setup(r => r.GetByIdAsync(1)).ReturnsAsync((Book)null);
+#pragma warning restore CS8600
+#pragma warning restore CS8620
 
         var dto = new BookCreateDto { Title = "Updated Title", Author = "Author" };
 
-        var result = await service.UpdateBook(1, dto);
+        var result = await this.service.UpdateBook(1, dto);
 
         Assert.False(result);
     }
@@ -152,6 +169,7 @@ public class BookServiceTests
     /// Verifies that DeleteBook() deletes the book and returns true when the book exists.
     /// Confirms that the deletion operation is successful.
     /// </summary>
+    /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
     [Fact]
     public async Task DeleteBook_BookExists_ReturnsTrue()
     {
@@ -167,10 +185,15 @@ public class BookServiceTests
     /// <summary>
     /// Ensures that DeleteBook() returns false when the book to be deleted is not found in the system.
     /// </summary>
+    /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
     [Fact]
     public async Task DeleteBook_BookDoesNotExist_ReturnsFalse()
     {
+#pragma warning disable CS8620 // Argument cannot be used for parameter due to differences in the nullability of reference types.
+#pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
         this.mockRepo.Setup(r => r.GetByIdAsync(1)).ReturnsAsync((Book)null);
+#pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
+#pragma warning restore CS8620 // Argument cannot be used for parameter due to differences in the nullability of reference types.
 
         var result = await this.service.DeleteBook(1);
 

@@ -1,4 +1,8 @@
-﻿namespace BookManagementAPI.Migrations
+﻿// <copyright file="20250702070336_InitialCreate.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
+namespace BookManagementAPI.Migrations
 {
     using Microsoft.EntityFrameworkCore.Migrations;
 

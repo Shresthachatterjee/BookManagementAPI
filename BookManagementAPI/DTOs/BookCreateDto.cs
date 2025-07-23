@@ -1,8 +1,13 @@
-﻿namespace BookManagementAPI.DTOs
+﻿// <copyright file="BookCreateDto.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+#pragma warning disable
+
+namespace BookManagementAPI.DTOs
 {
-    using BookManagementAPI.Validators;
     using System;
     using System.ComponentModel.DataAnnotations;
+    using BookManagementAPI.Validators;
 
     public class BookCreateDto
     {

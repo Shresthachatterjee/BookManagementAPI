@@ -1,4 +1,9 @@
-﻿using System.Text.Json;
+﻿// <copyright file="ExceptionHandlingMiddleware.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+#pragma warning disable
+
+using System.Text.Json;
 
 public class ExceptionHandlingMiddleware
 {

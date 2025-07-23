@@ -1,4 +1,9 @@
-﻿using AutoMapper;
+﻿// <copyright file="BookService.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+#pragma warning disable
+
+using AutoMapper;
 using BookManagementAPI.DTOs;
 using BookManagementAPI.Models;
 
@@ -9,7 +14,7 @@ using BookManagementAPI.Models;
 public class BookService : IBookService
 {
     private readonly IBookRepository repository;
-    private readonly IMapper _mapper;
+    private readonly IMapper mapper;
     private readonly ILogger<BookService> logger;
 
     /// <summary>
@@ -20,7 +25,7 @@ public class BookService : IBookService
     public BookService(IBookRepository repository, IMapper mapper, ILogger<BookService> logger)
     {
         this.repository = repository;
-        _mapper = mapper;
+        this.mapper = mapper;
         this.logger = logger;
     }
 
@@ -31,9 +36,9 @@ public class BookService : IBookService
     /// <returns>A list of all books with basic information for display or API response.</returns>
     public async Task<IEnumerable<BookReadDto>> GetAllBooks()
     {
-        logger.LogInformation("Fetching all books.");
-        var books = await repository.GetAllAsync();
-        return _mapper.Map<IEnumerable<BookReadDto>>(books);
+        this.logger.LogInformation("Fetching all books.");
+        var books = await this.repository.GetAllAsync();
+        return this.mapper.Map<IEnumerable<BookReadDto>>(books);
     }
 
     /// <summary>
@@ -44,15 +49,15 @@ public class BookService : IBookService
     /// <returns>Detailed information of the selected book, or null if not found.</returns>
     public async Task<BookReadDto> GetBookById(int id)
     {
-        logger.LogInformation("Fetching book with ID {BookId}.", id);
-        var book = await repository.GetByIdAsync(id);
+        this.logger.LogInformation("Fetching book with ID {BookId}.", id);
+        var book = await this.repository.GetByIdAsync(id);
         if (book == null)
         {
-            logger.LogWarning("Book with ID {BookId} not found.", id);
+            this.logger.LogWarning("Book with ID {BookId} not found.", id);
             return null;
         }
 
-        return _mapper.Map<BookReadDto>(book);
+        return this.mapper.Map<BookReadDto>(book);
     }
 
     /// <summary>
@@ -63,11 +68,11 @@ public class BookService : IBookService
     /// <returns>The newly created book with its system-generated details.</returns>
     public async Task<BookReadDto> CreateBook(BookCreateDto dto)
     {
-        logger.LogInformation("Creating a new book.");
-        var book = _mapper.Map<Book>(dto);
-        var created = await repository.CreateAsync(book);
-        logger.LogInformation("Book with ID {BookId} created successfully.", created.Id);
-        return _mapper.Map<BookReadDto>(created);
+        this.logger.LogInformation("Creating a new book.");
+        var book = this.mapper.Map<Book>(dto);
+        var created = await this.repository.CreateAsync(book);
+        this.logger.LogInformation("Book with ID {BookId} created successfully.", created.Id);
+        return this.mapper.Map<BookReadDto>(created);
     }
 
     /// <summary>
@@ -79,17 +84,17 @@ public class BookService : IBookService
     /// <returns>True if the update is successful, otherwise false.</returns>
     public async Task<bool> UpdateBook(int id, BookCreateDto dto)
     {
-        logger.LogInformation("Updating book with ID {BookId}.", id);
-        var book = await repository.GetByIdAsync(id);
+        this.logger.LogInformation("Updating book with ID {BookId}.", id);
+        var book = await this.repository.GetByIdAsync(id);
         if (book == null)
         {
-            logger.LogWarning("Cannot update. Book with ID {BookId} not found.", id);
+            this.logger.LogWarning("Cannot update. Book with ID {BookId} not found.", id);
             return false;
         }
 
-        _mapper.Map(dto, book);
-        await repository.UpdateAsync(book);
-        logger.LogInformation("Book with ID {BookId} updated successfully.", id);
+        this.mapper.Map(dto, book);
+        await this.repository.UpdateAsync(book);
+        this.logger.LogInformation("Book with ID {BookId} updated successfully.", id);
         return true;
     }
 
@@ -101,11 +106,11 @@ public class BookService : IBookService
     /// <returns>True if the book is successfully deleted, otherwise false.</returns>
     public async Task<bool> DeleteBook(int id)
     {
-        logger.LogInformation("Deleting book with ID {BookId}.", id);
-        var book = await repository.GetByIdAsync(id);
+        this.logger.LogInformation("Deleting book with ID {BookId}.", id);
+        var book = await this.repository.GetByIdAsync(id);
         if (book == null)
         {
-            logger.LogWarning("Cannot delete. Book with ID {BookId} not found.", id);
+            this.logger.LogWarning("Cannot delete. Book with ID {BookId} not found.", id);
             return false;
         }
 

@@ -1,16 +1,26 @@
-﻿using BookManagementAPI.DTOs;
+﻿// <copyright file="BookManagementAPITests.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
+#pragma warning disable
+
+using BookManagementAPI.DTOs;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 
 /// <summary>
 /// Unit tests for BooksController using mocked IBookService to validate controller behavior independently from the service layer.
 /// </summary>
+#pragma warning disable SA1649 // File name should match first type name
 public class BooksControllerTests
+#pragma warning restore SA1649 // File name should match first type name
 {
     private readonly Mock<IBookService> mockService;
     private readonly BooksController controller;
 
+#pragma warning disable CS1591
     public BooksControllerTests()
+#pragma warning restore CS1591
     {
         this.mockService = new Mock<IBookService>();
         this.controller = new BooksController(this.mockService.Object);
@@ -60,7 +70,9 @@ public class BooksControllerTests
     [Fact]
     public async Task Get_WithInvalidId_ReturnsNotFound()
     {
+#pragma warning disable CS8620 // Argument cannot be used for parameter due to differences in the nullability of reference types.
         this.mockService.Setup(s => s.GetBookById(99)).ReturnsAsync((BookReadDto)null);
+#pragma warning restore CS8620 // Argument cannot be used for parameter due to differences in the nullability of reference types.
 
         var result = await this.controller.Get(99);
 
@@ -71,6 +83,7 @@ public class BooksControllerTests
     /// Test to ensure Create() returns an HTTP 201 Created response after successfully creating a book.
     /// Verifies that the controller properly saves and returns the newly created book data.
     /// </summary>
+    /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
     [Fact]
     public async Task Create_ReturnsCreatedAtAction()
     {
@@ -90,6 +103,7 @@ public class BooksControllerTests
     /// Test to confirm Update() returns an HTTP 204 No Content response when a book is successfully updated.
     /// Validates that updates are properly processed by the controller for existing book IDs.
     /// </summary>
+    /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
     [Fact]
     public async Task Update_WithValidId_ReturnsNoContent()
     {
@@ -104,6 +118,7 @@ public class BooksControllerTests
     /// Test to verify Update() returns an HTTP 404 Not Found response when the book ID does not exist.
     /// Ensures the controller handles invalid updates gracefully.
     /// </summary>
+    /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
     [Fact]
     public async Task Update_WithInvalidId_ReturnsNotFound()
     {
@@ -118,6 +133,7 @@ public class BooksControllerTests
     /// Test to verify Delete() returns an HTTP 204 No Content response when a book is successfully deleted.
     /// Ensures that valid book deletions are processed correctly by the controller.
     /// </summary>
+    /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
     [Fact]
     public async Task Delete_WithValidId_ReturnsNoContent()
     {
@@ -132,6 +148,7 @@ public class BooksControllerTests
     /// Test to confirm Delete() returns an HTTP 404 Not Found response when the book ID does not exist.
     /// Verifies that the controller handles delete requests for non-existent books correctly.
     /// </summary>
+    /// <returns>A <see cref="Task"/> representing the asynchronous unit test.</returns>
     [Fact]
     public async Task Delete_WithInvalidId_ReturnsNotFound()
     {

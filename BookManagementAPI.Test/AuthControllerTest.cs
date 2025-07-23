@@ -1,4 +1,9 @@
-﻿namespace BookManagementAPI.Tests
+﻿// <copyright file="AuthControllerTest.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+#pragma warning disable
+
+namespace BookManagementAPI.Tests
 {
     using BookManagementAPI.Controllers;
     using BookManagementAPI.Helpers;

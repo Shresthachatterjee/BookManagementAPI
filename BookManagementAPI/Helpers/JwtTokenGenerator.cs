@@ -1,11 +1,16 @@
-﻿namespace BookManagementAPI.Helpers
+﻿// <copyright file="JwtTokenGenerator.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+#pragma warning disable
+
+namespace BookManagementAPI.Helpers
 {
-    using Microsoft.Extensions.Configuration;
-    using Microsoft.IdentityModel.Tokens;
     using System;
     using System.IdentityModel.Tokens.Jwt;
     using System.Security.Claims;
     using System.Text;
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.IdentityModel.Tokens;
 
     /// <summary>
     /// This class is responsible for generating JWT tokens.
@@ -35,7 +40,7 @@
         public string GenerateToken(string username)
         {
             // Retrieve JWT settings from appsettings.json
-            var jwtSettings = config.GetSection("JwtSettings");
+            var jwtSettings = this.config.GetSection("JwtSettings");
             var secretKey = jwtSettings["SecretKey"];
             var issuer = jwtSettings["Issuer"];
             var audience = jwtSettings["Audience"];
