@@ -25,10 +25,19 @@ jobs:
     
     - name: Clean solution
       run: dotnet clean BookManagementAPI.sln
+      
+    - name: Format code (static analysis - formatting)
+      run: dotnet format BookManagementAPI.sln --verify-no-changes
+
+    - name: Build solution with analyzers
+      run: dotnet build BookManagementAPI.sln --no-restore --configuration Release -warnaserror
+
 
     - name: Build solution
       run: dotnet build BookManagementAPI.sln --no-restore --configuration Release
 
     - name: Run tests
-      run: dotnet test BookManagementAPI.Test/BookManagementAPI.Test.csproj --no-build --verbosity normal
+      run: dotnet test BookManagementAPI.Test/BookManagementAPI.Test.csproj --no-build --configuration Release --verbosity normal --logger "console;verbosity=detailed"
+
+
 
