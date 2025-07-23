@@ -30,6 +30,7 @@ jobs:
       run: dotnet build BookManagementAPI.sln --no-restore --configuration Release
 
     - name: Run tests
-      run: dotnet test BookManagementAPI.Test/BookManagementAPI.Test.csproj --no-build --verbosity normal --logger "console;verbosity=detailed"
+      run: dotnet test BookManagementAPI.Test/BookManagementAPI.Test.csproj --no-build --configuration Release --verbosity normal --logger "console;verbosity=detailed"
+
 
 
